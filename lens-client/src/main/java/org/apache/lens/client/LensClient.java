@@ -38,6 +38,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.common.collect.Maps;
+
 import lombok.Getter;
 
 
@@ -566,6 +567,10 @@ public class LensClient {
 
   public List<String> listResources(String type) {
     return this.connection.listResourcesFromConnection(type);
+  }
+
+  public List<String> getAllOpenSessions(String user) {
+    return this.connection.listAllOpenSessions(user);
   }
 
 }

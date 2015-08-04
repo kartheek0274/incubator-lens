@@ -180,6 +180,21 @@ public class SessionResource {
   }
 
   /**
+   * Lists open sessions across the server.
+   *
+   * @return Lists of open sessions public ids
+   */
+  @GET
+  @Path("resources/listallopensessions")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
+  public StringList listAllOpenSessions(@FormDataParam("userName") String userName) {
+    List<String> resources = sessionService.listAllOpenSessions(userName);
+    return new StringList(resources);
+  }
+
+
+
+  /**
    * Delete a resource from sesssion from all the @{link LensService}s running in this Lens server
    * <p>
    * Similar to addResource, this call is successful only if resource was deleted from all services.

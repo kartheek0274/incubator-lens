@@ -300,4 +300,15 @@ public class LensConnection {
     sb.append('}');
     return sb.toString();
   }
+
+  /**
+   * Fetches and prints all open sessions
+   * @return
+   */
+  public List<String> listAllOpenSessions(String user) {
+    WebTarget target = getSessionWebTarget();
+    StringList result = target.path("resources/listallopensessions").queryParam("user", user).request().get(StringList.class);
+    return result.getElements();
+  }
+
 }

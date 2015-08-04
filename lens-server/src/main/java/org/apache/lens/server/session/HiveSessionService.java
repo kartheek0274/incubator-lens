@@ -118,6 +118,31 @@ public class HiveSessionService extends LensService implements SessionService {
     return numAdded;
   }
 
+  public List<String> listAllOpenSessions(String userName) {
+    List<String> openSessions = null;
+    if (userName != null) {
+      openSessions = new ArrayList<String>();
+      if(SESSION_MAP != null) {
+        Set<String> sessionHandles = SESSION_MAP.keySet();
+        Iterator<String> itr = sessionHandles.iterator();
+        while(itr.hasNext()){
+    	   String sessionID = itr.next();
+    	   LensSessionHandle sessionHandle = SESSION_MAP.get(sessionID);
+    	   String user = getSession(sessionHandle).getUserName();
+    	   if(user.toLowerCase().compareTo(userName.toLowerCase()) == 0){
+    	     openSessions.add(sessionID);
+    	   }
+        }
+      }
+    } else if(SESSION_MAP != null) {
+    	 openSessions.addAll(SESSION_MAP.keySet());
+    } else {
+    	return null;
+    }
+    return openSessions;
+
+  }
+
   @Override
   public List<String> listAllResources(LensSessionHandle sessionHandle, String type) {
     if (!isValidResouceType(type)) {

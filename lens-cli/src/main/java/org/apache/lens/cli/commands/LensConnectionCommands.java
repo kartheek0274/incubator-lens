@@ -78,6 +78,22 @@ public class LensConnectionCommands extends BaseLensCommand {
   }
 
   /**
+   * Get the list of all open session.
+   *
+   * @return the string
+   */
+  @CliCommand(value = "list opensessions", help = "Fetches and prints all open sessions from lens server"
+    + "If user is provided, then it lists only open session by a specific user")
+  public String getListOfAllSessions(@CliOption(key = {"", "user"}, mandatory = false,
+		    help = "<resource-type>") String user) {
+    List<String> sessions = getClient().getAllOpenSessions(user);
+    if (sessions == null) {
+      return "No open sessions found";
+    }
+    return Joiner.on("\n").skipNulls().join(sessions);
+  }
+
+  /**
    * Show parameters.
    *
    * @return the string
